@@ -3,16 +3,55 @@ package config;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class DriverInitializer {
 
-    public String browser;
+    //=======Настройка driver и Selenoid на двух браузерах и параллельным запуском каждго теста в двух браузерах одноверменно===============
     public WebDriver driver;
 
+    public ChromeOptions chromeOptions(String browserName, String browserVersion){
+        ChromeOptions capabilities = new ChromeOptions();
+        capabilities.setCapability("browserName", browserName);
+        capabilities.setCapability("browserVersion", browserVersion);
+        capabilities.setCapability("enableVNC", true);
+        return capabilities;
+    }
+
+    public FirefoxOptions firefoxOptions(String browserName, String browserVersion){
+        FirefoxOptions capabilities = new FirefoxOptions();
+        capabilities.setCapability("browserName", browserName);
+        capabilities.setCapability("browserVersion", browserVersion);
+        capabilities.setCapability("enableVNC", true);
+        return capabilities;
+    }
+
+    public void setCapabilitiesByArguments(String browserName, String browserVersion) {
+        if (browserName.equals("chrome")){
+            try {
+                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub/"),
+                        chromeOptions(browserName,browserVersion));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub/"),
+                        firefoxOptions(browserName,browserVersion));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        driver.get("http://docker.nordclan:33220/login");
+    }
+}
+
+
+
+
+//====================Настройка driver и Selenoid на одном браузере====================
 /*
     public void initWebDriver() throws MalformedURLException {
         //System.setProperty("webdriver.chrome.driver", "C:\\webdrivers\\chromedriver.exe");
@@ -29,10 +68,11 @@ public class DriverInitializer {
         driver.get("http://docker.nordclan:33220/login");
 
     }
-    */
+ */
 
 
-
+//================Настройка driver и Selenoid на двух браузерах========================
+/*
     public ChromeOptions chromeOptions() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
@@ -56,13 +96,5 @@ public class DriverInitializer {
         }
         driver.get("http://docker.nordclan:33220/login");
         return this;
-
-        //if (browser.equals("chrome")){
-        //    driver = new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub/"), chromeOptions());
-       // }
-       // else {
-      //      driver = new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub/"), firefoxOptions());
-      //  }
     }
-
-}
+*/
