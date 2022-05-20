@@ -14,6 +14,7 @@ import java.time.Duration;
 import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+
 public class AuthTest {
     private final By CHECK_TITLE = By.xpath("//h1[contains(@class,'title')]");
 
