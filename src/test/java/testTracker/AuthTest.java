@@ -1,7 +1,6 @@
 package testTracker;
 
 import config.DriverInitializer;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -39,6 +38,7 @@ public class AuthTest {
         .until(ExpectedConditions.presenceOfElementLocated(By.xpath(authPage1.errorMessage))));
         String errMesPage = authPage1.ERROR_MESSAGE.getText();
         Assertions.assertEquals("Неверный логин/пароль. Проверьте данные", errMesPage);
+        driverInitializer.driver.quit();
     }
 
     @ParameterizedTest
@@ -50,6 +50,7 @@ public class AuthTest {
         authPage.USER_NAME.sendKeys("airat.basyrov");
         boolean disable = !authPage.AUTH_PAGE_BUTTON.isEnabled();
         Assertions.assertTrue(disable);
+        driverInitializer.driver.quit();
     }
 
     @ParameterizedTest
@@ -65,10 +66,6 @@ public class AuthTest {
         wait.until(ExpectedConditions.presenceOfElementLocated(CHECK_TITLE));
         WebElement title = driverInitializer.driver.findElement(CHECK_TITLE);
         Assertions.assertEquals("My Projects", title.getText());
-    }
-
-    @AfterEach
-    public void tearDown(){
-        //di.driver.quit();
+        driverInitializer.driver.quit();
     }
 }
