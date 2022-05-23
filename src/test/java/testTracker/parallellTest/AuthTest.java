@@ -1,4 +1,4 @@
-package testTracker;
+package testTracker.parallellTest;
 
 import config.DriverInitializer;
 import org.junit.jupiter.api.Assertions;
