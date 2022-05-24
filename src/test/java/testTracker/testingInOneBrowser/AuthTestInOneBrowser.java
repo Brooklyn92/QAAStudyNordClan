@@ -2,12 +2,7 @@ package testTracker.testingInOneBrowser;
 
 import config.DriverInitializer;
 import helpers.Attach;
-import helpers.ScreenshotExtension;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,6 +17,7 @@ public class AuthTestInOneBrowser {
 
     private final By CHECK_TITLE = By.xpath("//h1[contains(@class,'title')]");
     DriverInitializer driverInitializer;
+
 
     @DisplayName("Тестирования ввода невалидного пароля")
     @Test
@@ -49,14 +45,14 @@ public class AuthTestInOneBrowser {
         .until(ExpectedConditions.presenceOfElementLocated(By.xpath(authPage1.errorMessage))));
         String errMesPage = authPage1.ERROR_MESSAGE.getText();
         step("Проверяем, что отобразилось информационное сообщение о вводе не правильного пароля",() -> {
-            Assertions.assertEquals("Неверный логин/пароль. Проверьте данные xdghxdfgh", errMesPage);
+            Assertions.assertEquals("Неверный логин/пароль. Проверьте данные", errMesPage);
         });
     }
 
     @DisplayName("Проверка задизейбленной кнопки Войти")
     @Test
     public void authCase003() throws MalformedURLException {
-        DriverInitializer driverInitializer = new DriverInitializer();
+        driverInitializer = new DriverInitializer();
         driverInitializer.initWebDriver();
         AuthPage authPage = new AuthPage(driverInitializer);
         authPage.USER_NAME.sendKeys("airat.basyrov");
@@ -68,7 +64,7 @@ public class AuthTestInOneBrowser {
     @DisplayName("Вход на трекер")
     @Test
     public void authCase004() throws MalformedURLException {
-        DriverInitializer driverInitializer = new DriverInitializer();
+        driverInitializer = new DriverInitializer();
         driverInitializer.initWebDriver();
         AuthPage authPage = new AuthPage(driverInitializer);
         authPage.USER_NAME.sendKeys("airat.basyrov");
